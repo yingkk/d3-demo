@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.percent_text {
+  color: #FFF;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.circle_line {
+  background: transparent;
+}
+
+.leftSideSlice,
+.rightSlideSlice {
+  background: #1a3d72;
+}
+
+.outerSlice {
+  background: -webkit-linear-gradient(#1a3d72, transparent);
+}
