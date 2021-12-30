@@ -3,10 +3,15 @@
   function pieTop(d, rx, ry, ir) {
     console.log(d)
     if (d.endAngle - d.startAngle == 0) return "M 0 0";
-    var sx = rx * Math.cos(d.startAngle),
-      sy = ry * Math.sin(d.startAngle),
-      ex = rx * Math.cos(d.endAngle),
-      ey = ry * Math.sin(d.endAngle);
+    // var sx = rx * Math.cos(d.startAngle),
+    //   sy = ry * Math.sin(d.startAngle),
+    //   ex = rx * Math.cos(d.endAngle),
+    //   ey = ry * Math.sin(d.endAngle);
+
+    var sx = rx * Math.sin(d.startAngle),
+      sy = -ry * Math.cos(d.startAngle),
+      ex = rx * Math.sin(d.endAngle),
+      ey = -ry * Math.cos(d.endAngle);
 
     var ret = [];
     ret.push(
@@ -43,10 +48,18 @@
     var startAngle = d.startAngle > Math.PI ? Math.PI : d.startAngle;
     var endAngle = d.endAngle > Math.PI ? Math.PI : d.endAngle;
 
-    var sx = rx * Math.cos(startAngle),
+     var sx = rx * Math.cos(startAngle),
       sy = ry * Math.sin(startAngle),
       ex = rx * Math.cos(endAngle),
       ey = ry * Math.sin(endAngle);
+
+    // var startAngle = d.startAngle < Math.PI ? Math.PI : d.startAngle;
+    // var endAngle = d.endAngle < Math.PI ? Math.PI : d.endAngle;
+
+    // var sx = rx * Math.sin(startAngle),
+    //   sy = -ry * Math.cos(startAngle),
+    //   ex = rx * Math.sin(endAngle),
+    //   ey = -ry * Math.cos(endAngle);
 
     var ret = [];
     ret.push(
@@ -337,7 +350,7 @@
       .transition()
       .delay(function (d, i) {
         // 延时显示，最终效果是一节一节动态显示
-        return i * 50;
+        return i * 50 + 500;
       })
       .duration(100)
       .attr("opacity", 1);;;
