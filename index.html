@@ -5,11 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/d3.min.js"></script>
     <script src="js/Dount3D.js"></script>
     <title>D3.js-demo</title>
+    <style type="text/css">
+        .percent_text {
+            fill: #FFF;
+            font-weight: 600;
+            font-size: 40px;
+        }
+    </style>
 </head>
 
 <body>
@@ -38,8 +45,28 @@
                 .attr("class", "circle_line")
                 .attr("stroke", "#0abef9")
                 .attr("stroke-width", "2")
-                .attr("fill", "transparent") // 实心椭圆：填充颜色
+                .attr("fill", "none")
+                // .attr("fill", "url(#outer)")
+                // .attr("fill", "transparent") // 实心椭圆：填充颜色
                 .attr("transform", "translate(" + width / 2 + "," + height * 1.2 / 2 + ")");
+
+            //渐变
+            var linearGradient = svg.append("defs").append("linearGradient")
+                .attr("id", "outer")
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "0%")
+                .attr("y2", "100%")
+            // linearGradient.append("stop")
+            // .attr("offset", '0%')
+            // .attr("stop-color", 'transparent')
+            linearGradient.append("stop")
+                .attr("offset", '0%')
+                .attr("stop-color", '#1a3d72')
+            linearGradient.append("stop")
+                .attr("offset", '100%')
+                .attr("stop-color", 'transparent')
+
 
             // svg.append("ellipse")
             //     .attr("cx", 0)
@@ -72,7 +99,7 @@
 
             // 画百分比文字
             svg.append("text")
-                .attr("x", width / 2 - 20) //文本的起始x坐标
+                .attr("x", width / 2 - 40) //文本的起始x坐标
                 .attr("y", height / 2 + 10) //文本的起始x坐标
                 .attr("class", "percent_text")
                 .text(pdata + "%");

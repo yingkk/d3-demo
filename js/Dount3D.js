@@ -1,6 +1,7 @@
 !(function () {
   var Donut3D = {};
   function pieTop(d, rx, ry, ir) {
+    console.log(d)
     if (d.endAngle - d.startAngle == 0) return "M 0 0";
     var sx = rx * Math.cos(d.startAngle),
       sy = ry * Math.sin(d.startAngle),
@@ -81,6 +82,7 @@
       ex = ir * rx * Math.cos(endAngle),
       ey = ir * ry * Math.sin(endAngle);
 
+
     var ret = [];
     ret.push(
       "M",
@@ -109,7 +111,7 @@
   function getPercent(d) {
     return d.endAngle - d.startAngle > 0.2
       ? Math.round((1000 * (d.endAngle - d.startAngle)) / (Math.PI * 2)) / 10 +
-          "%"
+      "%"
       : "";
   }
 
@@ -214,12 +216,12 @@
         return d.value;
       })(data);
 
-    d3.select("#" + id)
-      .selectAll(".innerSlice")
-      .data(_data)
-      .transition()
-      .duration(750)
-      .attrTween("d", arcTweenInner);
+    // d3.select("#" + id)
+    //   .selectAll(".innerSlice")
+    //   .data(_data)
+    //   .transition()
+    //   .duration(750)
+    //   .attrTween("d", arcTweenInner);
 
     d3.select("#" + id)
       .selectAll(".topSlice")
@@ -274,8 +276,12 @@
     //   .enter()
     //   .append("path")
     //   .attr("class", "innerSlice")
+    //   // .style("fill", function (d) {
+    //   //   return d3.hsl(d.data.color).darker(0.7);
+    //   // })
     //   .style("fill", function (d) {
-    //     return d3.hsl(d.data.color).darker(0.7);
+    //     if (d.data.color == "transparent") return "transparent";
+    //     else return "url(#outer)";
     //   })
     //   .attr("d", function (d) {
     //     return pieInner(d, rx + 0.5, ry + 0.5, h, ir);
@@ -301,7 +307,15 @@
       })
       .each(function (d) {
         this._current = d;
-      });
+      })
+      .attr("opacity", 0)
+      .transition()
+      .delay(function (d, i) {
+        // 延时显示，最终效果是一节一节动态显示
+        return i * 50;
+      })
+      .duration(100)
+      .attr("opacity", 1);
 
     slices
       .selectAll(".outerSlice")
@@ -310,14 +324,23 @@
       .append("path")
       .attr("class", "outerSlice")
       .style("fill", function (d) {
-        return d3.hsl(d.data.color).darker(0.7);
+        if (d.data.color == "transparent") return "transparent";
+        else return "url(#outer)";
       })
       .attr("d", function (d) {
         return pieOuter(d, rx - 0.5, ry - 0.5, h);
       })
       .each(function (d) {
         this._current = d;
-      });
+      })
+      .attr("opacity", 0)
+      .transition()
+      .delay(function (d, i) {
+        // 延时显示，最终效果是一节一节动态显示
+        return i * 50;
+      })
+      .duration(100)
+      .attr("opacity", 1);;;
 
     slices
       .selectAll(".percent")
@@ -335,14 +358,14 @@
       .each(function (d) {
         this._current = d;
       })
-      .attr("opacity", 0)
-      .transition()
-      .delay(function (d, i) {
-        // 延时显示，最终效果是一节一节动态显示
-        return i * 50;
-      })
-      .duration(100)
-      .attr("opacity", 1);;
+    // .attr("opacity", 0)
+    // .transition()
+    // .delay(function (d, i) {
+    //   // 延时显示，最终效果是一节一节动态显示
+    //   return i * 50;
+    // })
+    // .duration(100)
+    // .attr("opacity", 1);
 
     // slices
     //   .selectAll(".rightSideSlice")
@@ -350,9 +373,13 @@
     //   .enter()
     //   .append("path")
     //   .attr("class", "rightSideSlice")
+    //   // .style("fill", function (d) {
+    //   //   if (d.data.color == "transparent") return "transparent";
+    //   //   else return d3.hsl(d.data.color).darker();
+    //   // })
     //   .style("fill", function (d) {
     //     if (d.data.color == "transparent") return "transparent";
-    //     else return d3.hsl(d.data.color).darker();
+    //     else return "url(#outer)";
     //   })
     //   .attr("d", function (d) {
     //     return pieRightSide(d, rx, ry, h, ir);
@@ -375,9 +402,13 @@
     //   .enter()
     //   .append("path")
     //   .attr("class", "leftSideSlice")
+    //   // .style("fill", function (d) {
+    //   //   if (d.data.color == "transparent") return "transparent";
+    //   //   else return d3.hsl(d.data.color).darker();
+    //   // })
     //   .style("fill", function (d) {
     //     if (d.data.color == "transparent") return "transparent";
-    //     else return d3.hsl(d.data.color).darker();
+    //     else return "url(#outer)";
     //   })
     //   .attr("d", function (d) {
     //     return pieLeftSide(d, rx, ry, h, ir);
