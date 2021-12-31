@@ -36,19 +36,7 @@
                 .attr("height", height)
                 .append("g");
 
-            // 画椭圆
-            svg.append("ellipse")
-                .attr("x", width / 2)
-                .attr("y", height / 2)
-                .attr("rx", width / 2 - 30)
-                .attr("ry", height / 3)
-                .attr("class", "circle_line")
-                .attr("stroke", "#0abef9")
-                .attr("stroke-width", "2")
-                .attr("fill", "none")
-                // .attr("fill", "url(#outer)")
-                // .attr("fill", "transparent") // 实心椭圆：填充颜色
-                .attr("transform", "translate(" + width / 2 + "," + height * 1.2 / 2 + ")");
+
 
             //渐变
             var linearGradient = svg.append("defs").append("linearGradient")
@@ -129,6 +117,26 @@
             // 画3D饼图
             svg.append("g").attr("id", "salesDonut");
             Donut3D.draw("salesDonut", dataset, width / 2, height / 2, width / 2 - 30, height / 4, width / 10, 0.6);
+
+            // 画椭圆
+            svg.append("ellipse")
+                .attr("x", width / 2)
+                .attr("y", height / 2)
+                .attr("rx", width / 2 - 30 + 10)
+                .attr("ry", height / 4 + 10)
+                .attr("class", "circle_line")
+                .attr("stroke", "#0abef9")
+                .attr("stroke-width", "2")
+                .attr("fill", "none")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+
+            svg.append("circle")
+                .attr("cx", width - 66)
+                .attr("cy", height / 2 + 52)
+                .attr("r", "4")
+                .attr("stroke", "#0abef9")
+                .attr("stroke-width", "2")
+                .attr("fill", "#0abef9")
         }
     </script>
 </body>
